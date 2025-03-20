@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
+import SignInForm from "@/app/components/signin/signin-form";
 
 import { LogInIcon } from "lucide-react";
 
@@ -38,6 +39,8 @@ const SignIn = () => {
               : "Cadastre-se e comece a usar a aplicação agora mesmo!"}
           </DialogDescription>
         </DialogHeader>
+
+        {formType === "signin" ? <SignInForm /> : ""}
 
         <DialogFooter>
           <button
