@@ -2,6 +2,7 @@ import Menu from "@/app/components/ui/menu";
 import Search from "@/app/components/ui/search";
 import NewPost from "@/app/components/ui/new-post";
 import SignIn from "@/app/components/signin/signin";
+import Nav from "@/app/components/ui/nav";
 
 const Header = () => {
   return (
@@ -14,6 +15,7 @@ const Header = () => {
           <SignIn />
         </div>
       </div>
+      <Nav />
     </header>
   );
 };
