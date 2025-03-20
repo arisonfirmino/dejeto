@@ -2,9 +2,11 @@ import { Button } from "@/app/components/ui/button";
 
 import { BookOpenIcon } from "lucide-react";
 
-const NewPost = () => {
+import { Session } from "next-auth";
+
+const NewPost = ({ session }: { session: Session | null }) => {
   return (
-    <Button size="icon">
+    <Button disabled={!session} size="icon">
       <BookOpenIcon />
     </Button>
   );

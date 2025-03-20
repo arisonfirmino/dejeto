@@ -11,10 +11,13 @@ import {
 
 import { MenuIcon } from "lucide-react";
 
-const Menu = () => {
+import { Session } from "next-auth";
+
+const Menu = ({ session }: { session: Session | null }) => {
   return (
     <Sheet>
       <SheetTrigger
+        disabled={!session}
         className={cn(buttonVariants({ size: "icon", variant: "outline" }))}
       >
         <MenuIcon />

@@ -138,7 +138,7 @@ const SignUpForm = () => {
             errors.username?.message ||
             errors.email?.message ||
             errors.password?.message ||
-            errors.password?.message}
+            errors.passwordConfirmation?.message}
         </p>
       )}
 
