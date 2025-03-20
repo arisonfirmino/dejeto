@@ -90,6 +90,7 @@ const SignInForm = () => {
       />
 
       <Input
+        type="password"
         placeholder="Senha"
         {...register("password")}
         error={errors.password}
