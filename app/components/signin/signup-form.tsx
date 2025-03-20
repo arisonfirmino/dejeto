@@ -1,11 +1,17 @@
 "use client";
 
+import { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { Input } from "@/app/components/ui/input";
 import SubmitButton from "@/app/components/signin/submit-button";
+
+import { createAccount } from "@/app/actions/user";
+
+import { toast } from "sonner";
 
 const schema = yup.object({
   firstName: yup
@@ -47,18 +53,46 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
+    setError,
     reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
+
+    const response = await createAccount({ data });
+
+    if (response?.error && response.type === "username") {
+      setError("username", {
+        type: "manual",
+        message: response.error,
+      });
+
+      setIsLoading(false);
+      return;
+    }
+
+    if (response?.error && response.type === "email") {
+      setError("email", {
+        type: "manual",
+        message: response.error,
+      });
+
+      setIsLoading(false);
+      return;
+    }
+
     reset();
+    setIsLoading(false);
+    toast(`Bem vindo(a), ${data.firstName}!`);
   };
 
   return (
@@ -108,7 +142,7 @@ const SignUpForm = () => {
         </p>
       )}
 
-      <SubmitButton />
+      <SubmitButton isLoading={isLoading} />
     </form>
   );
 };

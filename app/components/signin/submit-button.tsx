@@ -1,9 +1,9 @@
 import { Button } from "@/app/components/ui/button";
 
-const SubmitButton = () => {
+const SubmitButton = ({ isLoading }: { isLoading: boolean }) => {
   return (
-    <Button type="submit" className="w-full">
-      Continuar
+    <Button type="submit" disabled={isLoading} className="w-full">
+      {isLoading ? "Carregando" : "Continuar"}
     </Button>
   );
 };
