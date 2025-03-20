@@ -1,9 +1,14 @@
+"use client";
+
+import { useState } from "react";
+
 import { cn } from "@/app/lib/utils";
 import { buttonVariants } from "@/app/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -12,6 +17,8 @@ import {
 import { LogInIcon } from "lucide-react";
 
 const SignIn = () => {
+  const [formType, setFormType] = useState<"signin" | "signup">("signin");
+
   return (
     <Dialog>
       <DialogTrigger
@@ -19,14 +26,31 @@ const SignIn = () => {
       >
         <LogInIcon />
       </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>
+            {formType === "signin" ? "Acesse sua conta" : "Crie sua conta"}
+          </DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            {formType === "signin"
+              ? "Faça login para utilizar todos os recursos da aplicação."
+              : "Cadastre-se e comece a usar a aplicação agora mesmo!"}
           </DialogDescription>
         </DialogHeader>
+
+        <DialogFooter>
+          <button
+            onClick={() =>
+              setFormType(formType === "signin" ? "signup" : "signin")
+            }
+            className="text-lowercase hover:text-primary active:text-primary text-muted-foreground text-xs hover:underline active:underline"
+          >
+            {formType === "signin"
+              ? "Ainda não tem uma conta?"
+              : "Já tenho uma conta"}
+          </button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
