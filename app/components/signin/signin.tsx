@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import SignInForm from "@/app/components/signin/signin-form";
+import SignUpForm from "@/app/components/signin/signup-form";
 
 import { LogInIcon } from "lucide-react";
 
@@ -40,14 +41,14 @@ const SignIn = () => {
           </DialogDescription>
         </DialogHeader>
 
-        {formType === "signin" ? <SignInForm /> : ""}
+        {formType === "signin" ? <SignInForm /> : <SignUpForm />}
 
         <DialogFooter>
           <button
             onClick={() =>
               setFormType(formType === "signin" ? "signup" : "signin")
             }
-            className="text-lowercase hover:text-primary active:text-primary text-muted-foreground text-xs hover:underline active:underline"
+            className="text-lowercase hover:text-primary active:text-primary text-muted-foreground cursor-pointer text-xs hover:underline active:underline"
           >
             {formType === "signin"
               ? "Ainda não tem uma conta?"
