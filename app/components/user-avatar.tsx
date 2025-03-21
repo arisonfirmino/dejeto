@@ -25,7 +25,9 @@ const UserAvatar = ({ user, size }: UserAvatarProps) => {
           <AvatarFallback>{user.username}</AvatarFallback>
         </Avatar>
       ) : (
-        <div className="border-border/30 bg-card flex size-8 items-center justify-center rounded-full border">
+        <div
+          className={`border-border/30 bg-card flex items-center justify-center rounded-full border ${size ? size : "size-8"}`}
+        >
           <UserIcon size={16} />
         </div>
       )}
