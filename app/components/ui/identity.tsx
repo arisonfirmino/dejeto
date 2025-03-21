@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 interface IdentityProps {
   user: Pick<User, "firstName" | "lastName" | "username" | "avatar">;
   size?: string;
-  fontSize: string;
+  fontSize?: string;
 }
 
 const Identity = ({ user, size, fontSize }: IdentityProps) => {
