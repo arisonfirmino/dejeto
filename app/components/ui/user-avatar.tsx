@@ -18,7 +18,7 @@ interface UserAvatarProps {
 
 const UserAvatar = ({ user, size }: UserAvatarProps) => {
   return (
-    <Link href="/profile">
+    <Link href={`/${user.username}`}>
       {user.avatar ? (
         <Avatar className={cn(size ? size : "size-8")}>
           <AvatarImage src={user.avatar} />

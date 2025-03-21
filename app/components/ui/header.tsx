@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Menu from "@/app/components/ui/menu";
 import Search from "@/app/components/ui/search";
 import NewPost from "@/app/components/ui/new-post";
-import UserAvatar from "@/app/components/user-avatar";
+import UserAvatar from "@/app/components/ui/user-avatar";
 import SignIn from "@/app/components/signin/signin";
 import Nav from "@/app/components/ui/nav";
 
