@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { Input } from "@/app/components/ui/input";
-import SubmitButton from "@/app/components/signin/submit-button";
+import SubmitButton from "@/app/components/ui/submit-button";
 
 import { createAccount } from "@/app/actions/user";
 

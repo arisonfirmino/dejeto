@@ -1,11 +1,15 @@
 import UserCard from "@/app/components/ui/user-card";
 import PostsList from "@/app/components/post/posts-list";
 
-const Home = () => {
+import { getPosts } from "@/app/helpers/getPosts";
+
+const Home = async () => {
+  const posts = await getPosts();
+
   return (
     <>
       <UserCard />
-      <PostsList />
+      <PostsList posts={posts} />
     </>
   );
 };

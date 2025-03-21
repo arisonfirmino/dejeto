@@ -12,35 +12,44 @@ import PostImage from "@/app/components/post/post-image";
 import LikeButton from "@/app/components/post/like-button";
 import CommentForm from "@/app/components/post/comment-form";
 
-import { DotIcon } from "lucide-react";
+import { DotIcon, ImageOffIcon } from "lucide-react";
 
-const PostItem = () => {
-  const user = {
-    firstName: "Arison",
-    lastName: "Firmino",
-    username: "arisonfirmino",
-    avatar: null,
-  };
+import { formatDate } from "@/app/helpers/formatDate";
 
+import { Prisma } from "@prisma/client";
+
+interface PostItemProps {
+  post: Prisma.PostGetPayload<{
+    include: { user: true };
+  }>;
+}
+
+const PostItem = ({ post }: PostItemProps) => {
   return (
-    <Card className="px-5">
+    <Card className="border-border/15 border-b p-5">
       <CardHeader>
         <div className="flex gap-0.5">
-          <Identity user={user} size="size-8" fontSize="text-xs" />
+          <Identity user={post.user} size="size-8" fontSize="text-xs" />
           <DotIcon size={16} className="text-muted-foreground" />
-          <span className="text-muted-foreground text-xs">21 mar, 2025</span>
+          <span className="text-muted-foreground text-xs">
+            {formatDate(post.created_at)}
+          </span>
         </div>
       </CardHeader>
       <CardContent>
-        <CardTitle className="line-clamp-1">Untitled</CardTitle>
+        <CardTitle className="line-clamp-1">{post.title}</CardTitle>
         <CardDescription className="line-clamp-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum illo
-          voluptas architecto, sunt ab, quis quod voluptatibus fugit aliquid
-          tempore nobis unde ad! Ut debitis mollitia porro minus assumenda
-          quasi.
+          {post.description}
         </CardDescription>
-        <PostLinks />
-        <PostImage />
+        <PostLinks post={post} />
+        {post.image ? (
+          <PostImage />
+        ) : (
+          <div className="text-muted-foreground flex items-center justify-center gap-2 py-2.5 text-xs">
+            <ImageOffIcon size={14} />
+            <span>Este post não tem imagem.</span>
+          </div>
+        )}
       </CardContent>
       <CardFooter className="flex-col">
         <div className="flex items-center gap-2.5">
@@ -49,7 +58,9 @@ const PostItem = () => {
         </div>
 
         <p className="line-clamp-2 text-xs">
-          <span className="text-foreground font-medium">{user.username}</span>
+          <span className="text-foreground font-medium">
+            {post.user.username}
+          </span>
           &nbsp; Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Pariatur molestiae officia molestias deleniti consequatur quos nobis
           amet, eligendi voluptatibus dolore natus tempore. Fuga deserunt esse

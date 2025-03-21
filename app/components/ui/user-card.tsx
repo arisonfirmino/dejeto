@@ -38,7 +38,7 @@ const UserCard = () => {
 
   return (
     user && (
-      <Card className="p-5">
+      <Card className="border-border/15 border-b p-5">
         <CardHeader>
           <Identity user={user} />
         </CardHeader>
