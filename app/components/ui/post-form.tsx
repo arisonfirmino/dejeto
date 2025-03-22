@@ -3,15 +3,21 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
+import { storage } from "@/app/lib/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { Input } from "@/app/components/ui/input";
 import { Textarea } from "@/app/components/ui/textarea";
+import FileUpload from "@/app/components/ui/file-upload";
 import SubmitButton from "@/app/components/ui/submit-button";
 
 import { createNewPost } from "@/app/actions/post";
+
+import { v4 as uuidv4 } from "uuid";
 
 import { toast } from "sonner";
 
@@ -24,7 +30,10 @@ const schema = yup.object({
     .string()
     .required("A descrição do projeto é obrigatória.")
     .min(3, "A descrição deve ter pelo menos 3 caracteres."),
-  deploy: yup.string().required("").url("Insira uma url válida."),
+  deploy: yup
+    .string()
+    .required("O link de deploy é obrigatório.")
+    .url("Insira uma url válida."),
   repo: yup.string().url("Insira uma url válida."),
 });
 
@@ -32,6 +41,7 @@ type FormData = yup.InferType<typeof schema>;
 
 const PostForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState<File | null>(null);
 
   const { data: session } = useSession();
 
@@ -49,6 +59,19 @@ const PostForm = () => {
 
     setIsLoading(true);
 
+    let imageUrl = undefined;
+
+    if (image) {
+      const imageRef = ref(
+        storage,
+        `posts/${session.user.username}-${uuidv4()}-${data.title}`,
+      );
+
+      const snapshot = await uploadBytes(imageRef, image);
+
+      imageUrl = await getDownloadURL(snapshot.ref);
+    }
+
     await createNewPost({
       data: {
         userId: session.user.id,
@@ -56,6 +79,7 @@ const PostForm = () => {
         description: data.description,
         deploy: data.deploy,
         repo: data.repo,
+        image: imageUrl,
       },
     });
 
@@ -90,6 +114,8 @@ const PostForm = () => {
         {...register("repo")}
         error={errors.repo}
       />
+
+      <FileUpload image={image} setImage={setImage} />
 
       {errors && (
         <p className="text-center text-xs text-red-400">

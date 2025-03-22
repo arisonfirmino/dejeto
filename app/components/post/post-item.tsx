@@ -43,7 +43,7 @@ const PostItem = ({ post }: PostItemProps) => {
         </CardDescription>
         <PostLinks post={post} />
         {post.image ? (
-          <PostImage />
+          <PostImage image={post.image} />
         ) : (
           <div className="text-muted-foreground flex items-center justify-center gap-2 py-2.5 text-xs">
             <ImageOffIcon size={14} />
