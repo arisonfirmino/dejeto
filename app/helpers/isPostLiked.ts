@@ -3,20 +3,17 @@
 import { db } from "@/app/lib/prisma";
 
 export const isPostLiked = async ({
-  likerId,
-  likedId,
+  userId,
   postId,
 }: {
-  likerId: string;
-  likedId: string;
+  userId: string;
   postId: string;
 }) => {
-  if (!likerId || !likedId || !postId) return false;
+  if (!userId || !postId) return false;
 
   const existingLike = await db.like.findFirst({
     where: {
-      likerId,
-      likedId,
+      userId,
       postId,
     },
   });

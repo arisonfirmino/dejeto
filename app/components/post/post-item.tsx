@@ -16,6 +16,7 @@ import PostImage from "@/app/components/post/post-image";
 import LikeButton from "@/app/components/post/like-button";
 import LikeCount from "@/app/components/post/like-count";
 import CommentForm from "@/app/components/post/comment-form";
+import PostComments from "@/app/components/post/post-comments";
 
 import { DotIcon, ImageOffIcon } from "lucide-react";
 
@@ -25,7 +26,11 @@ import { Prisma } from "@prisma/client";
 
 interface PostItemProps {
   post: Prisma.PostGetPayload<{
-    include: { user: true; likes: true };
+    include: {
+      user: true;
+      likes: true;
+      comments: { include: { user: true } };
+    };
   }>;
 }
 
@@ -66,19 +71,11 @@ const PostItem = ({ post }: PostItemProps) => {
         ) : (
           <div className="flex items-center gap-2.5">
             <LikeButton post={post} />
-            <CommentForm />
+            <CommentForm postId={post.id} />
           </div>
         )}
 
-        <p className="line-clamp-2 text-xs">
-          <span className="text-foreground font-medium">
-            {post.user.username}
-          </span>
-          &nbsp; Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Pariatur molestiae officia molestias deleniti consequatur quos nobis
-          amet, eligendi voluptatibus dolore natus tempore. Fuga deserunt esse
-          facilis nemo. Voluptates, alias aperiam!
-        </p>
+        <PostComments comments={post.comments} />
       </CardFooter>
     </Card>
   );

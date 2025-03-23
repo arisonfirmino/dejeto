@@ -32,8 +32,7 @@ const LikeButton = ({ post }: LikeButtonProps) => {
       if (!session) return;
 
       const isLiked = await isPostLiked({
-        likerId: session.user.id,
-        likedId: post.user.id,
+        userId: session.user.id,
         postId: post.id,
       });
 
@@ -49,8 +48,7 @@ const LikeButton = ({ post }: LikeButtonProps) => {
     setIsLoading(true);
 
     await toggleLike({
-      likerId: session.user.id,
-      likedId: post.user.id,
+      userId: session.user.id,
       postId: post.id,
     });
 
