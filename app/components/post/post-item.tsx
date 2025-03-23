@@ -1,3 +1,7 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+
 import {
   Card,
   CardContent,
@@ -10,6 +14,7 @@ import Identity from "@/app/components/ui/identity";
 import PostLinks from "@/app/components/post/post-links";
 import PostImage from "@/app/components/post/post-image";
 import LikeButton from "@/app/components/post/like-button";
+import LikeCount from "@/app/components/post/like-count";
 import CommentForm from "@/app/components/post/comment-form";
 
 import { DotIcon, ImageOffIcon } from "lucide-react";
@@ -20,11 +25,13 @@ import { Prisma } from "@prisma/client";
 
 interface PostItemProps {
   post: Prisma.PostGetPayload<{
-    include: { user: true };
+    include: { user: true; likes: true };
   }>;
 }
 
 const PostItem = ({ post }: PostItemProps) => {
+  const { data: session } = useSession();
+
   return (
     <Card className="border-border/15 border-b p-5">
       <CardHeader>
@@ -52,10 +59,16 @@ const PostItem = ({ post }: PostItemProps) => {
         )}
       </CardContent>
       <CardFooter className="flex-col">
-        <div className="flex items-center gap-2.5">
-          <LikeButton />
-          <CommentForm />
-        </div>
+        {!session ? (
+          <LikeCount count={post.likes.length} />
+        ) : session.user.id === post.user.id ? (
+          <LikeCount count={post.likes.length} />
+        ) : (
+          <div className="flex items-center gap-2.5">
+            <LikeButton post={post} />
+            <CommentForm />
+          </div>
+        )}
 
         <p className="line-clamp-2 text-xs">
           <span className="text-foreground font-medium">
