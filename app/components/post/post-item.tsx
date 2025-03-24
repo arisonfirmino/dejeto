@@ -11,6 +11,8 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import Identity from "@/app/components/ui/identity";
+import FollowButton from "@/app/components/ui/follow-button";
+import PostMenu from "@/app/components/post/menu/post-menu";
 import PostLinks from "@/app/components/post/post-links";
 import PostImage from "@/app/components/post/post-image";
 import LikeButton from "@/app/components/post/like-button";
@@ -23,7 +25,6 @@ import { DotIcon, ImageOffIcon } from "lucide-react";
 import { formatDate } from "@/app/helpers/formatDate";
 
 import { Prisma } from "@prisma/client";
-import FollowButton from "../ui/follow-button";
 
 interface PostItemProps {
   post: Prisma.PostGetPayload<{
@@ -51,7 +52,7 @@ const PostItem = ({ post }: PostItemProps) => {
 
         {session &&
           (session.user.id === post.user.id ? (
-            ""
+            <PostMenu post={post} />
           ) : (
             <FollowButton followingId={post.user.id} />
           ))}
