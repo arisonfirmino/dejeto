@@ -1,6 +1,9 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+
+import Link from "next/link";
 
 import {
   Card,
@@ -38,6 +41,7 @@ interface PostItemProps {
 
 const PostItem = ({ post }: PostItemProps) => {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   return (
     <Card className="border-border/15 border-b p-5">
@@ -59,8 +63,14 @@ const PostItem = ({ post }: PostItemProps) => {
       </CardHeader>
       <CardContent>
         <CardTitle className="line-clamp-1">{post.title}</CardTitle>
-        <CardDescription className="line-clamp-2">
-          {post.description}
+        <CardDescription
+          className={pathname === `/post/${post.id}` ? "" : "line-clamp-2"}
+        >
+          {pathname === `/post/${post.id}` ? (
+            post.description
+          ) : (
+            <Link href={`/post/${post.id}`}>{post.description}</Link>
+          )}
         </CardDescription>
         <PostLinks post={post} />
         {post.image ? (
@@ -84,7 +94,9 @@ const PostItem = ({ post }: PostItemProps) => {
           </div>
         )}
 
-        <PostComments comments={post.comments} />
+        {pathname === `/post/${post.id}` ? null : (
+          <PostComments comments={post.comments} />
+        )}
       </CardFooter>
     </Card>
   );
