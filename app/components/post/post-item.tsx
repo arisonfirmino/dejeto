@@ -23,6 +23,7 @@ import { DotIcon, ImageOffIcon } from "lucide-react";
 import { formatDate } from "@/app/helpers/formatDate";
 
 import { Prisma } from "@prisma/client";
+import FollowButton from "../ui/follow-button";
 
 interface PostItemProps {
   post: Prisma.PostGetPayload<{
@@ -39,7 +40,7 @@ const PostItem = ({ post }: PostItemProps) => {
 
   return (
     <Card className="border-border/15 border-b p-5">
-      <CardHeader>
+      <CardHeader className="flex items-center justify-between">
         <div className="flex gap-0.5">
           <Identity user={post.user} size="size-8" fontSize="text-xs" />
           <DotIcon size={16} className="text-muted-foreground" />
@@ -47,6 +48,13 @@ const PostItem = ({ post }: PostItemProps) => {
             {formatDate(post.created_at)}
           </span>
         </div>
+
+        {session &&
+          (session.user.id === post.user.id ? (
+            ""
+          ) : (
+            <FollowButton followingId={post.user.id} />
+          ))}
       </CardHeader>
       <CardContent>
         <CardTitle className="line-clamp-1">{post.title}</CardTitle>

@@ -23,6 +23,9 @@ model User {
   portfolio  String?
   created_at DateTime @default(now())
 
+  following Follow[] @relation("followers")
+  followers Follow[] @relation("following")
+
   posts    Post[]
   likes    Like[]
   comments Comment[]
@@ -46,6 +49,20 @@ model Post {
   comments Comment[]
 
   @@map("posts")
+}
+
+model Follow {
+  id         String   @id @default(uuid()) @map("_id")
+  created_at DateTime @default(now())
+
+  follower   User   @relation("followers", fields: [followerId], references: [id])
+  followerId String
+
+  following   User   @relation("following", fields: [followingId], references: [id])
+  followingId String
+
+  @@unique([followerId, followingId])
+  @@map("follow")
 }
 
 model Like {

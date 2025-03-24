@@ -12,13 +12,18 @@ import {
   CardFooter,
 } from "@/app/components/ui/card";
 import Identity from "@/app/components/ui/identity";
+import FollowCount from "@/app/components/ui/follow-count";
 import ContactLinks from "@/app/components/ui/contact-links";
 import ShareButton from "@/app/components/ui/share-button";
 
-import { User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
+type UserProps = Prisma.UserGetPayload<{
+  include: { followers: true; following: true };
+}>;
 
 const UserCard = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProps | null>(null);
 
   const { data: session } = useSession();
 
@@ -39,8 +44,12 @@ const UserCard = () => {
   return (
     user && (
       <Card className="border-border/15 border-b p-5">
-        <CardHeader>
+        <CardHeader className="flex items-center justify-between">
           <Identity user={user} />
+          <FollowCount
+            followersCount={user.followers.length}
+            followingCount={user.following.length}
+          />
         </CardHeader>
 
         {user.bio && (
