@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import {
@@ -14,6 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/app/components/ui/alert-dialog";
+import { Button } from "@/app/components/ui/button";
 
 import { LoaderCircleIcon, Trash2Icon } from "lucide-react";
 
@@ -24,6 +26,9 @@ const DeletePost = ({ postId }: { postId: string }) => {
 
   const { data: session } = useSession();
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const handleDelete = async () => {
     if (!session) return;
 
@@ -32,22 +37,20 @@ const DeletePost = ({ postId }: { postId: string }) => {
     await deletePost({ userId: session.user.id, postId });
 
     setIsLoading(false);
+    if (pathname === `post/${postId}`) router.replace("/");
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger disabled={isLoading} asChild>
-        <button
-          disabled={isLoading}
-          className="text-muted-foreground hover:text-foreground flex w-full cursor-pointer items-center justify-between rounded p-1 text-xs hover:bg-gray-100"
-        >
+        <Button size="sm" className="justify-between">
           {isLoading ? "Excluindo" : "Excluir"}
           {isLoading ? (
             <LoaderCircleIcon size={12} className="animate-spin" />
           ) : (
             <Trash2Icon size={12} />
           )}
-        </button>
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

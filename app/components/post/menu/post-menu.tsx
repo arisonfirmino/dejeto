@@ -1,11 +1,14 @@
-import { cn } from "@/app/lib/utils";
-import { buttonVariants } from "@/app/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu";
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/app/components/ui/drawer";
 import DeletePost from "@/app/components/post/menu/delete-post";
 
 import { EllipsisIcon } from "lucide-react";
@@ -18,18 +21,28 @@ interface PostMenuProps {
 
 const PostMenu = ({ post }: PostMenuProps) => {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        className={cn(buttonVariants({ size: "icon", variant: "ghost" }))}
-      >
-        <EllipsisIcon />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent side="bottom">
-        <DropdownMenuItem asChild>
+    <Drawer>
+      <DrawerTrigger>
+        <EllipsisIcon size={14} />
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Gerenciar publicação</DrawerTitle>
+          <DrawerDescription>
+            Escolha uma das opções abaixo para gerenciar este post.
+          </DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
           <DeletePost postId={post.id} />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+
+          <DrawerClose>
+            <Button variant="outline" className="w-full">
+              Cancelar
+            </Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 };
 
