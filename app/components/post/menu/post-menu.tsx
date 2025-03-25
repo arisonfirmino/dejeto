@@ -35,7 +35,7 @@ const PostMenu = ({ post }: PostMenuProps) => {
         <DrawerFooter>
           <DeletePost postId={post.id} />
 
-          <DrawerClose>
+          <DrawerClose asChild>
             <Button variant="outline" className="w-full">
               Cancelar
             </Button>
