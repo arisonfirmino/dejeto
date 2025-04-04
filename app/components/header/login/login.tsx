@@ -19,9 +19,10 @@ import { LogInIcon } from "lucide-react";
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger
         className={cn(buttonVariants({ size: "icon", variant: "outline" }))}
       >
@@ -42,7 +43,11 @@ const Login = () => {
           </DrawerDescription>
         </DrawerHeader>
 
-        {isSignUp ? <SignUpForm /> : <SignInForm />}
+        {isSignUp ? (
+          <SignUpForm onSuccess={() => setOpen(false)} />
+        ) : (
+          <SignInForm />
+        )}
       </DrawerContent>
     </Drawer>
   );
