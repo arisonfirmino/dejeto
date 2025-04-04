@@ -1,7 +1,7 @@
 import Menu from "@/app/components/header/menu";
 import Search from "@/app/components/header/search";
 import NewPost from "@/app/components/header/new-post";
-import Login from "@/app/components/header/login";
+import Login from "@/app/components/header/login/login";
 
 const Header = () => {
   return (
