@@ -4,10 +4,12 @@ import {
   Drawer,
   DrawerContent,
   DrawerDescription,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/app/components/ui/drawer";
+import LogOutButton from "@/app/components/header/logout-button";
 
 import { MenuIcon } from "lucide-react";
 
@@ -24,6 +26,9 @@ const Menu = () => {
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
+        <DrawerFooter>
+          <LogOutButton />
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

@@ -46,7 +46,7 @@ const Login = () => {
         {isSignUp ? (
           <SignUpForm onSuccess={() => setOpen(false)} />
         ) : (
-          <SignInForm />
+          <SignInForm onSuccess={() => setOpen(false)} />
         )}
       </DrawerContent>
     </Drawer>

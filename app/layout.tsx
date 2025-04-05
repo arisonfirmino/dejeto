@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
+import AuthProvider from "@/app/providers/auth";
 import Header from "@/app/components/header/header";
 
 const poppinsFont = Poppins({
@@ -22,8 +23,10 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${poppinsFont.className} antialiased`}>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

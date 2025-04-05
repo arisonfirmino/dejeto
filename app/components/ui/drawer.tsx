@@ -86,7 +86,7 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="drawer-footer"
-      className={cn("flex flex-col items-center p-2.5", className)}
+      className={cn("flex flex-col items-center px-2.5", className)}
       {...props}
     />
   );
