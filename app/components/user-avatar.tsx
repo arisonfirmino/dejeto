@@ -2,7 +2,6 @@ import {
   Drawer,
   DrawerContent,
   DrawerDescription,
-  DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/app/components/ui/drawer";
@@ -11,13 +10,14 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
+import UserData from "@/app/components/user-data";
 
 import { UserIcon } from "lucide-react";
 
 import { User } from "@prisma/client";
 
 interface UserAvatarProps {
-  user: Pick<User, "username" | "avatar">;
+  user: Pick<User, "id" | "username" | "avatar">;
 }
 
 const UserAvatar = ({ user }: UserAvatarProps) => {
@@ -36,10 +36,12 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
         )}
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
-        </DrawerHeader>
+        <DrawerTitle className="hidden">{user.username}</DrawerTitle>
+        <DrawerDescription className="hidden">
+          {user.username}
+        </DrawerDescription>
+
+        <UserData id={user.id} />
       </DrawerContent>
     </Drawer>
   );

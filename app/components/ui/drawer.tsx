@@ -65,7 +65,7 @@ function DrawerContent({
         )}
         {...props}
       >
-        <div className="bg-muted/30 mx-auto mt-2.5 hidden h-1.5 w-20 shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
+        <div className="bg-muted/30 mx-auto my-2.5 hidden h-1.5 w-20 shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
