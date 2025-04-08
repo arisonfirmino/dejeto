@@ -11,7 +11,7 @@ const Identity = ({ user }: IdentityProps) => {
     <div className="flex items-center gap-2.5">
       <UserDrawer user={user} />
       <div>
-        <p className="text-sm font-medium">
+        <p className="text-sm font-medium capitalize">
           {user.firstName} {user.lastName}
         </p>
         <p className="text-foreground/50 text-xs">@{user.username}</p>

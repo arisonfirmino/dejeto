@@ -4,20 +4,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/app/components/ui/tooltip";
+import { Post } from "@prisma/client";
 
 import { GlobeIcon, BookMarkedIcon } from "lucide-react";
 
-const PostsLinks = () => {
+interface PostsLinksProps {
+  post: Pick<Post, "deploy" | "repo">;
+}
+
+const PostsLinks = ({ post }: PostsLinksProps) => {
   const links = [
     {
       label: "Deploy",
       icon: <GlobeIcon size={16} />,
-      href: "https://smart-finance-calculator.vercel.app",
+      href: post.deploy,
     },
     {
       label: "Repositório",
       icon: <BookMarkedIcon size={16} />,
-      href: "https://github.com/arisonfirmino/smart-finance-calculator",
+      href: post.repo,
     },
   ];
 

@@ -1,17 +1,21 @@
 import PostItem from "@/app/components/post/post-item";
 
-import { User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 interface PostsListProps {
-  user: User;
+  posts: Prisma.PostGetPayload<{
+    include: { user: true };
+  }>[];
 }
 
-const PostsList = ({ user }: PostsListProps) => {
+const PostsList = ({ posts }: PostsListProps) => {
   return (
     <ul>
-      <li>
-        <PostItem user={user} />
-      </li>
+      {posts.map((post) => (
+        <li key={post.id}>
+          <PostItem post={post} />
+        </li>
+      ))}
     </ul>
   );
 };

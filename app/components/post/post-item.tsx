@@ -12,24 +12,30 @@ import PostInteractions from "@/app/components/post/post-interactions";
 
 import { DotIcon } from "lucide-react";
 
-import { User } from "@prisma/client";
+import { formatDate } from "@/app/helpers/formatDate";
+
+import { Prisma } from "@prisma/client";
 
 interface PostItemProps {
-  user: User;
+  post: Prisma.PostGetPayload<{
+    include: { user: true };
+  }>;
 }
 
-const PostItem = ({ user }: PostItemProps) => {
+const PostItem = ({ post }: PostItemProps) => {
   return (
     <Card className="border-border/30 gap-2.5 border-b bg-transparent py-5">
       <CardHeader className="px-2.5">
-        <Identity user={user} />
+        <Identity user={post.user} />
       </CardHeader>
 
       <CardContent className="space-y-1.5">
         <div className="flex items-center gap-1.5 px-2.5">
-          <CardTitle>Nome do projeto</CardTitle>
+          <CardTitle>{post.title}</CardTitle>
           <DotIcon size={16} className="text-foreground/50" />
-          <span className="text-foreground/50 text-xs">20 mar 2025</span>
+          <span className="text-foreground/50 text-xs">
+            {formatDate(post.created_at)}
+          </span>
         </div>
 
         <div className="bg-card aspect-square w-full" />
@@ -38,21 +44,22 @@ const PostItem = ({ user }: PostItemProps) => {
       <CardFooter className="gap-1.5 px-2.5">
         <div className="flex items-center justify-between">
           <PostInteractions />
-          <PostsLinks />
+          <PostsLinks post={post} />
         </div>
 
         <p className="text-foreground/50 text-xs">
           curtido por{" "}
-          <span className="text-foreground font-medium">{user.username}</span> e
-          mais <span className="text-foreground font-medium">63</span> pessoas
+          <span className="text-foreground font-medium">
+            {post.user.username}
+          </span>{" "}
+          e mais <span className="text-foreground font-medium">63</span> pessoas
         </p>
 
         <CardDescription className="line-clamp-2">
-          <span className="text-foreground font-medium">{user.username}</span>
-          &nbsp;&nbsp;Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Eum aliquid ipsa dignissimos! Perspiciatis quas nobis, quisquam ea
-          quasi eligendi, aliquam sint voluptas esse, nihil sit consequuntur
-          enim odit illo perferendis.
+          <span className="text-foreground font-medium">
+            {post.user.username}
+          </span>
+          &nbsp;&nbsp;{post.description}
         </CardDescription>
       </CardFooter>
     </Card>
