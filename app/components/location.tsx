@@ -1,4 +1,4 @@
-import { MapPinIcon } from "lucide-react";
+import { PinIcon } from "lucide-react";
 
 import { User } from "@prisma/client";
 
@@ -8,12 +8,10 @@ interface LocationProps {
 
 const Location = ({ user }: LocationProps) => {
   return (
-    <div className="flex items-center gap-2 text-sm">
-      <span>
-        <MapPinIcon size={16} className="text-primary" />
-      </span>
-      {user.location}
-    </div>
+    <p className="flex items-center justify-center gap-1.5 text-xs">
+      <PinIcon size={12} className="text-primary" />
+      {user.location ? user.location : "Sem localização"}
+    </p>
   );
 };
 

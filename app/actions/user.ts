@@ -44,3 +44,44 @@ export const createAccount = async ({ data }: CreateAccountProps) => {
 
   revalidatePath("/");
 };
+
+interface UpdateUserDataProps {
+  data: {
+    userId: string;
+    firstName?: string;
+    lastName?: string;
+    location?: string;
+    portfolio?: string;
+    github?: string;
+    linkedin?: string;
+  };
+}
+
+export const updateUserData = async ({ data }: UpdateUserDataProps) => {
+  if (!data.userId) throw new Error("");
+
+  const user = await db.user.findUnique({
+    where: {
+      id: data.userId,
+    },
+  });
+
+  if (!user) throw new Error("");
+
+  const { userId, ...fieldsToUpdate } = data;
+
+  const userData = Object.fromEntries(
+    Object.entries(fieldsToUpdate).filter(([value]) => value !== undefined),
+  );
+
+  if (Object.keys(userData).length > 0) {
+    await db.user.update({
+      where: {
+        id: userId,
+      },
+      data: userData,
+    });
+  }
+
+  revalidatePath("/");
+};

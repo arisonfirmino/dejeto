@@ -80,6 +80,7 @@ const SignInForm = ({ onSuccess }: SignInFormProps) => {
     reset();
     setIsLoading(false);
     onSuccess?.();
+    window.location.reload();
   };
 
   return (

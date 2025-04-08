@@ -1,4 +1,4 @@
-import UserAvatar from "@/app/components/user-avatar";
+import UserAvatar from "@/app/components/user-drawer";
 
 import { User } from "@prisma/client";
 

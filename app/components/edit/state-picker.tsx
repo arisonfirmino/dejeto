@@ -12,11 +12,13 @@ import { User } from "@prisma/client";
 
 interface StatePickerProps {
   user: Pick<User, "location">;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-const StatePicker = ({ user }: StatePickerProps) => {
+const StatePicker = ({ user, value, onChange }: StatePickerProps) => {
   return (
-    <Select>
+    <Select value={value} onValueChange={onChange}>
       <SelectTrigger>
         <SelectValue
           placeholder={user.location ? user.location : "Sem localização"}

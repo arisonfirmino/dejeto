@@ -14,7 +14,13 @@ function Drawer({
 function DrawerTrigger({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
-  return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
+  return (
+    <DrawerPrimitive.Trigger
+      data-slot="drawer-trigger"
+      className={cn("cursor-pointer")}
+      {...props}
+    />
+  );
 }
 
 function DrawerPortal({
@@ -112,7 +118,7 @@ function DrawerDescription({
   return (
     <DrawerPrimitive.Description
       data-slot="drawer-description"
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn("text-foreground/50 text-sm", className)}
       {...props}
     />
   );
