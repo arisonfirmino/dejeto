@@ -77,6 +77,14 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+
+    ::-webkit-scrollbar {
+      @apply bg-background w-1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      @apply bg-primary;
+    }
   }
   body {
     @apply text-foreground bg-background;
