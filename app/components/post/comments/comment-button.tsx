@@ -55,7 +55,7 @@ const CommentButton = ({ post }: CommentButtonProps) => {
 
         {session && session.user.id !== post.user.id && (
           <DialogFooter className="bg-card border-border/30 rounded border p-2.5 shadow-lg">
-            <CommentForm />
+            <CommentForm postId={post.id} />
           </DialogFooter>
         )}
       </DialogContent>
