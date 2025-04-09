@@ -1,6 +1,6 @@
-import { format } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export const formatDate = (date: Date) => {
-  return format(date, "dd MMM yyyy", { locale: ptBR });
+  return `há ${formatDistanceToNow(date, { locale: ptBR })}`;
 };
