@@ -22,7 +22,8 @@ model User {
   linkedin  String?
   portfolio String?
 
-  posts Post[]
+  posts    Post[]
+  comments Comment[]
 
   created_at DateTime @default(now())
 
@@ -39,7 +40,24 @@ model Post {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
+  comments Comment[]
+
   created_at DateTime @default(now())
 
   @@map("posts")
+}
+
+model Comment {
+  id   String @id @default(uuid()) @map("_id")
+  text String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+
+  created_at DateTime @default(now())
+
+  @@map("comments")
 }

@@ -18,7 +18,10 @@ import { Prisma } from "@prisma/client";
 
 interface PostItemProps {
   post: Prisma.PostGetPayload<{
-    include: { user: true };
+    include: {
+      user: true;
+      comments: { include: { user: true } };
+    };
   }>;
 }
 
@@ -43,7 +46,7 @@ const PostItem = ({ post }: PostItemProps) => {
 
       <CardFooter className="gap-1.5 px-2.5">
         <div className="flex items-center justify-between">
-          <PostInteractions />
+          <PostInteractions post={post} />
           <PostsLinks post={post} />
         </div>
 

@@ -7,7 +7,17 @@ export const getPosts = async () => {
     orderBy: {
       created_at: "desc",
     },
-    include: { user: true },
+    include: {
+      user: true,
+      comments: {
+        orderBy: {
+          created_at: "desc",
+        },
+        include: {
+          user: true,
+        },
+      },
+    },
   });
 
   return posts;

@@ -4,7 +4,10 @@ import { Prisma } from "@prisma/client";
 
 interface PostsListProps {
   posts: Prisma.PostGetPayload<{
-    include: { user: true };
+    include: {
+      user: true;
+      comments: { include: { user: true } };
+    };
   }>[];
 }
 
