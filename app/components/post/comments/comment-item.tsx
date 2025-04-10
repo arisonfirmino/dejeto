@@ -1,4 +1,5 @@
 import UserDrawer from "@/app/components/user-drawer";
+import DeleteComment from "@/app/components//post/comments/delete-comment";
 
 import { DotIcon } from "lucide-react";
 
@@ -16,7 +17,7 @@ interface CommentItemProps {
 
 const CommentItem = ({ comment }: CommentItemProps) => {
   return (
-    <div className="border-border/30 flex items-start gap-2.5 space-y-1.5 border-b px-2.5 py-2.5">
+    <div className="border-border/30 relative flex items-start gap-2.5 space-y-1.5 border-b px-2.5 py-2.5">
       <UserDrawer user={comment.user} />
       <div className="text-foreground space-y-0.5 text-xs">
         <div className="flex items-center gap-1">
@@ -26,6 +27,8 @@ const CommentItem = ({ comment }: CommentItemProps) => {
         </div>
         <p>{comment.text}</p>
       </div>
+
+      <DeleteComment commentId={comment.id} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import CommentItem from "@/app/components/post/comments/comemnt-item";
+import CommentItem from "@/app/components/post/comments/comment-item";
 
 import { Prisma } from "@prisma/client";
 

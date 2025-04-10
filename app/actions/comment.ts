@@ -35,3 +35,34 @@ export const addComment = async ({ userId, postId, text }: AddCommentProps) => {
 
   revalidatePath("/");
 };
+
+export const deleteComment = async ({
+  userId,
+  commentId,
+}: {
+  userId: string;
+  commentId: string;
+}) => {
+  if (!userId) throw new Error("ID do usuário não fornecido.");
+  if (!commentId) throw new Error("ID do comentário não fornecido.");
+
+  const [user, comment] = await Promise.all([
+    db.user.findUnique({ where: { id: userId } }),
+    db.comment.findUnique({
+      where: { id: commentId },
+      include: { user: true },
+    }),
+  ]);
+
+  if (!user) throw new Error("Usuário não encontrado.");
+  if (!comment) throw new Error("Comentário não encontrado.");
+
+  if (userId !== comment.user.id)
+    throw new Error("Você não tem permissão para excluir este comentário.");
+
+  await db.comment.delete({
+    where: { id: commentId },
+  });
+
+  revalidatePath("/");
+};
