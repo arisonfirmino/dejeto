@@ -1,3 +1,7 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+
 import {
   Card,
   CardContent,
@@ -9,6 +13,7 @@ import {
 import Identity from "@/app/components/post/identity";
 import PostsLinks from "@/app/components/post/posts-links";
 import PostInteractions from "@/app/components/post/post-interactions";
+import PostMenu from "@/app/components/post/menu/post-menu";
 
 import { DotIcon } from "lucide-react";
 
@@ -26,10 +31,17 @@ interface PostItemProps {
 }
 
 const PostItem = ({ post }: PostItemProps) => {
+  const { data: session } = useSession();
+
   return (
     <Card className="border-border/30 gap-2.5 border-b bg-transparent py-5">
-      <CardHeader className="px-2.5">
+      <CardHeader className="flex items-center justify-between px-2.5">
         <Identity user={post.user} />
+        {session && session.user.id === post.user.id ? (
+          <PostMenu post={post} />
+        ) : (
+          ""
+        )}
       </CardHeader>
 
       <CardContent className="space-y-1.5">
