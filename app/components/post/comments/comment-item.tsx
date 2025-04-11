@@ -1,3 +1,7 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+
 import UserDrawer from "@/app/components/user-drawer";
 import DeleteComment from "@/app/components//post/comments/delete-comment";
 
@@ -16,6 +20,8 @@ interface CommentItemProps {
 }
 
 const CommentItem = ({ comment }: CommentItemProps) => {
+  const { data: session } = useSession();
+
   return (
     <div className="border-border/30 relative flex items-start gap-2.5 space-y-1.5 border-b px-2.5 py-2.5">
       <UserDrawer user={comment.user} />
@@ -28,7 +34,9 @@ const CommentItem = ({ comment }: CommentItemProps) => {
         <p>{comment.text}</p>
       </div>
 
-      <DeleteComment commentId={comment.id} />
+      {session && session.user.id === comment.user.id && (
+        <DeleteComment commentId={comment.id} />
+      )}
     </div>
   );
 };
