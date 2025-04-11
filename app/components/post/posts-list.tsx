@@ -7,6 +7,7 @@ interface PostsListProps {
     include: {
       user: true;
       comments: { include: { user: true } };
+      likes: { include: { user: true } };
     };
   }>[];
 }

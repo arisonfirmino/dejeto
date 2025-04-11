@@ -13,6 +13,7 @@ import {
 import Identity from "@/app/components/post/identity";
 import PostsLinks from "@/app/components/post/posts-links";
 import PostInteractions from "@/app/components/post/post-interactions";
+import PostLikes from "@/app/components/post/post-likes";
 import PostMenu from "@/app/components/post/menu/post-menu";
 
 import { DotIcon } from "lucide-react";
@@ -26,6 +27,7 @@ interface PostItemProps {
     include: {
       user: true;
       comments: { include: { user: true } };
+      likes: { include: { user: true } };
     };
   }>;
 }
@@ -62,13 +64,7 @@ const PostItem = ({ post }: PostItemProps) => {
           <PostsLinks post={post} />
         </div>
 
-        <p className="text-foreground/50 text-xs">
-          curtido por{" "}
-          <span className="text-foreground font-medium">
-            {post.user.username}
-          </span>{" "}
-          e mais <span className="text-foreground font-medium">63</span> pessoas
-        </p>
+        {post.likes.length > 0 && <PostLikes likes={post.likes} />}
 
         <CardDescription className="line-clamp-2">
           <span className="text-foreground font-medium">

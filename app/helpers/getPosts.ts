@@ -17,6 +17,14 @@ export const getPosts = async () => {
           user: true,
         },
       },
+      likes: {
+        orderBy: {
+          created_at: "desc",
+        },
+        include: {
+          user: true,
+        },
+      },
     },
   });
 
